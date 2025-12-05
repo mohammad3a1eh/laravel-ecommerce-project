@@ -6,24 +6,23 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('tests', function (Blueprint $table) {
+        Schema::create('attributes', function (Blueprint $table) {
             $table->id();
-            $table->decimal('price', 15, 3);
-            $table->char('phone_number', 11);
+
+            $table->foreignId('category_id')
+                ->constrained('categories')
+                ->restrictOnDelete();
+
+            $table->string('name', 50);
+
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('tests');
+        Schema::dropIfExists('attributes');
     }
 };
