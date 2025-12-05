@@ -133,5 +133,6 @@
     "category updated successfully": "دسته بندی با موفقیت آپدیت شد",
     "category added successfully": "دسته بندی با موفقیت اضافه شد",
     "category deleted successfully" : "دسته بندی با موفقیت حذف شد",
-    "category delete failed": "دسته بندی با موفقیت حذف نشد"
+    "category delete failed": "دسته بندی با موفقیت حذف نشد",
+    "shop": "فروشگاه"
 }
