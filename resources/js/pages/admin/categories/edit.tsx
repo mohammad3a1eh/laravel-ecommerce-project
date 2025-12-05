@@ -71,7 +71,7 @@ export default function EditCategory() {
             name_fa: category.name_fa,
             slug: category.slug,
             color: category.color,
-            description: category.description,
+            description: category.description ?? "",
             is_active: category.is_active,
             parent_id: category.parent_id?.toString() ?? null,
         },
