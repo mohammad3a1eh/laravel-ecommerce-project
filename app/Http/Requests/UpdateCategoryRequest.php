@@ -22,6 +22,8 @@ class UpdateCategoryRequest extends FormRequest
             'description' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
             'banner' => 'nullable|image|max:4096',
+            'remove_image' => 'nullable|boolean',
+            'remove_banner' => 'nullable|boolean',
             'is_active' => 'required|boolean',
             'parent_id' => 'nullable|exists:categories,id',
         ];
@@ -42,4 +44,3 @@ class UpdateCategoryRequest extends FormRequest
         ];
     }
 }
-
