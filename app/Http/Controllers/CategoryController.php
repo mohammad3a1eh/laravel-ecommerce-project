@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
+    public function index()
+    {
+
+        $categories = Category::with('parent')->orderBy('id', 'desc')->get();
+
+        return inertia("admin/categories/index", [
+            'categories' => $categories,
+        ]);
+    }
+
     public function create()
     {
         $categories = Category::select('id', 'name_fa')->get();
@@ -41,15 +51,6 @@ class CategoryController extends Controller
         }
 
         $category->save();
-
-        // تشخیص دکمه submit و ری‌دایرکت
-//        $action = $request->input('action', 'save');
-//        if ($action === 'save') {
-//            return redirect()->route('dashboard')->with('success', 'دسته بندی ذخیره شد.');
-//        } elseif ($action === 'saveAndEdit') {
-//            return redirect()->route('admin.categories.create')->with('success', 'دسته بندی ذخیره شد. ادامه ویرایش.');
-//        }
-        return redirect()->route('dashboard')->with('success', 'دسته بندی ذخیره شد.');
     }
 
     public function edit(Category $category)
@@ -74,8 +75,7 @@ class CategoryController extends Controller
 
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-
-        dd($request);
+//        dd($request);
 
         $category->name_fa = $request->name_fa;
         $category->slug = $request->slug;
@@ -96,7 +96,6 @@ class CategoryController extends Controller
             $category->image = null;
         }
 
-        // مدیریت بنر
         if ($request->hasFile('banner')) {
             if ($category->banner) {
                 Storage::disk('public')->delete($category->banner);
@@ -111,7 +110,18 @@ class CategoryController extends Controller
 
 
         $category->save();
+    }
 
-        return redirect()->route('admin.categories.create')->with('success', __('Category updated successfully'));
+    public function destroy(Category $category)
+    {
+        if ($category->image) {
+            Storage::disk('public')->delete($category->image);
+        }
+
+        if ($category->banner) {
+            Storage::disk('public')->delete($category->banner);
+        }
+
+        $category->delete();
     }
 }
