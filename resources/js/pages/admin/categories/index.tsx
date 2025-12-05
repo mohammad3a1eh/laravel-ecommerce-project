@@ -48,6 +48,7 @@ import { router } from '@inertiajs/react';
 import { useLaravelReactI18n } from 'laravel-react-i18n';
 import { route } from 'ziggy-js';
 import type { BreadcrumbItem } from '@/types';
+import { SquarePen, Trash } from 'lucide-react';
 
 interface Category {
     id: number;
@@ -159,17 +160,25 @@ export default function Categories() {
             id: 'actions',
             header: t("actions"),
             cell: ({ row }) => (
-                <div className="flex justify-center gap-2 flex-col border rounded-md m-1 p-1">
+                <div className="flex justify-center gap-2 flex-col border rounded-md m-1 p-1 w-fit items-center mx-auto">
                     <Link href={route("admin.categories.edit", row.original.id)}>
-                        <Button size="sm" variant="outline" className="w-full">
-                            {t("edit")}
-                        </Button>
+                            <Button
+                                size="sm"
+                                variant="outline"
+                                className="flex w-fit"
+                            >
+                                <SquarePen />
+                            </Button>
                     </Link>
                     <AlertDialog>
                         <AlertDialogTrigger asChild>
-                            <Button size="sm" variant="destructive">
-                                {t("delete")}
-                            </Button>
+                                <Button
+                                    size="sm"
+                                    variant="destructive"
+                                    className="flex w-fit"
+                                >
+                                    <Trash />
+                                </Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent dir={locale === "fa" ? "rtl" : "ltr"}>
                             <AlertDialogHeader>
