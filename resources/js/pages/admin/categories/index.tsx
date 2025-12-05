@@ -82,18 +82,33 @@ export default function Categories() {
 
     const customCategoryFilter = (row, columnId, filterValue) => {
         if (!filterValue) return true;
-        const value = filterValue.toString().toLowerCase();
+        const value = filterValue.toString().trim().toLowerCase();
 
-        const name = row.original.name_fa?.toString().toLowerCase() ?? "";
-        const parent = row.original.parent?.name_fa?.toString().toLowerCase() ?? "";
-        const status = row.original.is_active ? "active فعال" : "inactive غیرفعال";
+        const name = row.original.name_fa?.toLowerCase() ?? "";
+        const parent = row.original.parent?.name_fa?.toLowerCase() ?? "";
+        const isActive = row.original.is_active;
 
+        // --- وضعیت (active / inactive) ---
+        const activeKeywords = ["فعال", "active", "on", "true"];
+        const inactiveKeywords = ["غیرفعال", "غيرفعال", "غیر فعال", "inactive", "off", "false"];
+
+        const searchIsActive =
+            activeKeywords.some((k) => value === k) ? true :
+                inactiveKeywords.some((k) => value === k) ? false :
+                    null;
+
+        // اگر کاربر دقیقا وضعیت رو سرچ کرده
+        if (searchIsActive !== null) {
+            return isActive === searchIsActive;
+        }
+
+        // --- سرچ معمولی ----
         return (
             name.includes(value) ||
-            parent.includes(value) ||
-            status.includes(value)
+            parent.includes(value)
         );
     };
+
 
 
     useEffect(() => {
