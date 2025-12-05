@@ -27,8 +27,9 @@ return new class extends Migration
             $table->boolean('is_sellable')->default(true);
 
             $table->foreignId('category_id')
+                ->nullable()
                 ->constrained('categories')
-                ->cascadeOnDelete();
+                ->nullOnDelete();
 
             $table->timestamps();
         });
