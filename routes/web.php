@@ -20,11 +20,12 @@ Route::middleware(['auth', 'role:dev'])->group(function () {
 
 
 Route::prefix('dashboard')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
-//    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index'); // لیست دسته‌بندی‌ها
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index'); // لیست دسته‌بندی‌ها
     Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create'); // فرم ایجاد دسته‌بندی
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store'); // ذخیره دسته‌بندی جدید
-    Route::get('categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
-    Route::put('categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name("categories.destroy");
 });
 
 Route::get('/', function () {
