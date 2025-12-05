@@ -17,12 +17,29 @@ import { route } from "ziggy-js";
 import { useState, useEffect } from 'react';
 import { Trash } from 'lucide-react';
 import { Command, CommandEmpty, CommandInput } from '@/components/ui/command';
+import type { BreadcrumbItem } from '@/types';
+import { toast } from 'sonner';
 
 export default function EditCategory() {
     const { t, currentLocale } = useLaravelReactI18n();
     const locale = currentLocale();
 
-    const { categories, category } = usePage().props; // category از سرور برای ویرایش
+    const { categories, category } = usePage().props as { categories: any[]; category: any };
+
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: t("dashboard"),
+            href: route("dashboard"),
+        },
+        {
+            title: t("categories"),
+            href: route("admin.categories.index"),
+        },
+        {
+            title: t("edit category"),
+            href: route("admin.categories.edit", category.id),
+        }
+    ];
 
     const categorySchema = z.object({
         name_fa: z.string().min(1, t("this field is required")),
@@ -62,6 +79,8 @@ export default function EditCategory() {
 
     const [previewImage, setPreviewImage] = useState<string | null>(category.image_url ?? null);
     const [previewBanner, setPreviewBanner] = useState<string | null>(category.banner_url ?? null);
+    const [removeImage, setRemoveImage] = useState<boolean>(false);
+    const [removeBanner, setRemoveBanner] = useState<boolean>(false);
 
     const onSubmit = (data: CategoryFormValues) => {
         const formData = new FormData();
@@ -69,14 +88,14 @@ export default function EditCategory() {
         if (data.image && data.image.length > 0) {
             formData.append('image', data.image[0]);
             formData.append('remove_image', '0');
-        } else if (data.remove_image) {
+        } else if (removeImage) {
             formData.append('remove_image', '1');
         }
 
         if (data.banner && data.banner.length > 0) {
             formData.append('banner', data.banner[0]);
             formData.append('remove_banner', '0');
-        } else if (data.remove_banner) {
+        } else if (removeBanner) {
             formData.append('remove_banner', '1');
         }
 
@@ -84,9 +103,6 @@ export default function EditCategory() {
         formData.append('slug', data.slug);
         if (data.color) formData.append('color', data.color);
         if (data.description) formData.append('description', data.description);
-
-        // if (data.image && data.image.length > 0) formData.append('image', data.image[0]);
-        // if (data.banner && data.banner.length > 0) formData.append('banner', data.banner[0]);
 
         formData.append('is_active', data.is_active ? '1' : '0');
 
@@ -97,6 +113,12 @@ export default function EditCategory() {
             formData,
             {
                 forceFormData: true,
+                onSuccess: () => {
+                    toast.success(t("category updated successfully"));
+                    setTimeout(() => {
+                        router.visit(route("admin.categories.index"));
+                    }, 1500);
+                },
                 onError: (serverErrors) => {
                     Object.entries(serverErrors).forEach(([key, message]) => {
                         setError(key, {
@@ -110,16 +132,12 @@ export default function EditCategory() {
     };
 
     return (
-        <AppLayout breadcrumbs={[
-            { title: t("categories"), href: route("admin.categories.create") },
-            { title: t("edit"), href: '#' }
-        ]}>
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={t("edit category")} />
 
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" className="space-y-4" autoComplete="off">
                     <Card className="grid auto-rows-min gap-4 md:grid-cols-2 p-4">
-                        {/* فرم سمت چپ */}
                         <div className="flex flex-col gap-2">
                             <div>
                                 <Label>{t("name fa")}</Label>
@@ -156,6 +174,7 @@ export default function EditCategory() {
                                         const file = e.target.files?.[0];
                                         if (file) setPreviewImage(URL.createObjectURL(file));
                                         else setPreviewImage(null);
+                                        setRemoveImage(false);
                                     }}
                                     dir="ltr"
                                 />
@@ -173,6 +192,7 @@ export default function EditCategory() {
                                         const file = e.target.files?.[0];
                                         if (file) setPreviewBanner(URL.createObjectURL(file));
                                         else setPreviewBanner(null);
+                                        setRemoveBanner(false);
                                     }}
                                     dir="ltr"
                                 />
@@ -222,7 +242,6 @@ export default function EditCategory() {
                             </div>
                         </div>
 
-                        {/* پیش‌نمایش تصویر و بنر */}
                         <div className="flex flex-col gap-4">
                             {previewImage && (
                                 <div className="relative w-40 h-40 mx-auto my-auto">
@@ -235,6 +254,7 @@ export default function EditCategory() {
                                             setPreviewImage(null);
                                             setValue('image', undefined);
                                             setValue('remove_image', true);
+                                            setRemoveImage(true);
                                         }}
                                     >
                                         <Trash width={12} height={12} />
@@ -253,6 +273,7 @@ export default function EditCategory() {
                                             setPreviewBanner(null);
                                             setValue('banner', undefined);
                                             setValue('remove_banner', true);
+                                            setRemoveBanner(true);
                                         }}
                                     >
                                         <Trash width={12} height={12} />

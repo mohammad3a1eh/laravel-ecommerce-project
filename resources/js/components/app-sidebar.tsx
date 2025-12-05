@@ -17,7 +17,8 @@ import {
     Globe,
     Github,
     LayoutGrid,
-    TrafficCone
+    TrafficCone,
+    Tag
 } from 'lucide-react';
 import AppLogo from './app-logo';
 import { useLaravelReactI18n } from "laravel-react-i18n";
@@ -41,7 +42,14 @@ export function AppSidebar() {
             title: t("maintenance"),
             href: route("maintenance.index"),
             icon: TrafficCone,
+        },
+    ];
 
+    const ShopNavItems: NavItem[] = [
+        {
+            title: t("categories"),
+            href: route("admin.categories.index"),
+            icon: Tag,
         },
     ];
 
@@ -74,6 +82,7 @@ export function AppSidebar() {
 
             <SidebarContent>
                 <NavMain items={mainNavItems} groupLabel={t("global")}/>
+                <NavMain items={ShopNavItems} groupLabel={t("shop")}/>
                 <NavMain items={developerNavItems} groupLabel={t("developer")}/>
             </SidebarContent>
 

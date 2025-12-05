@@ -18,11 +18,28 @@ import { route } from "ziggy-js";
 import { useState } from 'react';
 import { Trash, X } from 'lucide-react';
 import { Command, CommandEmpty, CommandInput } from '@/components/ui/command';
+import { toast } from 'sonner';
+import type { BreadcrumbItem } from '@/types';
 
 
 export default function CreateCategory() {
     const {t, currentLocale} = useLaravelReactI18n();
     const locale = currentLocale();
+
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: t("dashboard"),
+            href: route("dashboard"),
+        },
+        {
+            title: t("categories"),
+            href: route("admin.categories.index"),
+        },
+        {
+            title: t("create category"),
+            href: route("admin.categories.create"),
+        }
+    ];
 
     const { categories } = usePage().props;
 
@@ -72,7 +89,12 @@ export default function CreateCategory() {
         if (data.parent_id) formData.append('parent_id', data.parent_id);
 
         router.post(route("admin.categories.store"), formData, {
-            onSuccess: () => router.visit(route("dashboard")),
+            onSuccess: () => {
+                toast.success(t("category added successfully"));
+                setTimeout(() => {
+                    router.visit(route("admin.categories.index"));
+                }, 1500);
+            },
             onError: (serverErrors) => {
                 console.log('Server validation errors:', serverErrors);
 
@@ -86,13 +108,9 @@ export default function CreateCategory() {
             },
 
         });
-        // Inertia.post(route('categories.store'), formData);
     };
     return (
-        <AppLayout breadcrumbs={[
-            { title: t("categories"), href: route("admin.categories.create") },
-            { title: t("create"), href: '#' }
-        ]}>
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={t("create category")} />
 
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">

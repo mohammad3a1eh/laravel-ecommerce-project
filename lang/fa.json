@@ -116,5 +116,22 @@
     "name fa has already been taken": "این نام فارسی قبلا استفاده شده است",
     "create category": "ایجاد دسته بندی",
     "categories" : "دسته بندی ها",
-    "create": "ایجاد"
+    "create": "ایجاد",
+    "id": "آیدی",
+    "actions": "عملیات",
+    "edit": "ویرایش",
+    "delete": "حذف",
+    "inactive": "غیر فعال",
+    "columns": "ستون ها",
+    "previous": "قبلی",
+    "next": "بعدی",
+    "page :index of :max": "صفحه :index از :max",
+    "you are deleting the :category category": "شما در حال حذف دسته بندی :category هستید",
+    "are you sure you want to do this": "از انجام این کار مطمعن هستید؟",
+    "no categories found": "هیچ دسته بندی ای پیدا نشد",
+    "edit category": "ویرایش دسته بندی",
+    "category updated successfully": "دسته بندی با موفقیت آپدیت شد",
+    "category added successfully": "دسته بندی با موفقیت اضافه شد",
+    "category deleted successfully" : "دسته بندی با موفقیت حذف شد",
+    "category delete failed": "دسته بندی با موفقیت حذف نشد"
 }

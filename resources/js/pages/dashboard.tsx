@@ -6,13 +6,9 @@ import {Head, usePage} from '@inertiajs/react';
 import {useLaravelReactI18n} from "laravel-react-i18n";
 import { Auth } from '@/types';
 import {Badge} from "@/components/ui/badge";
+import { route } from 'ziggy-js';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard().url,
-    },
-];
+
 
 export default function Dashboard() {
     // #localization
@@ -20,6 +16,13 @@ export default function Dashboard() {
     const locale = currentLocale();
 
     const { auth } = usePage<{ auth: Auth }>().props;
+
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: t("dashboard"),
+            href: route("dashboard"),
+        },
+    ];
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
