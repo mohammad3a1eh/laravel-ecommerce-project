@@ -57,7 +57,7 @@ class CategoryController extends Controller
     {
         $categories = Category::where('id', '!=', $category->id)->orderBy('name_fa')->get(['id', 'name_fa']);
 
-        return Inertia('admin/categories/edit', [
+        return inertia('admin/categories/edit', [
             'category' => [
                 'id' => $category->id,
                 'name_fa' => $category->name_fa,
