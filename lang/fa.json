@@ -130,12 +130,21 @@
     "are you sure you want to do this": "از انجام این کار مطمعن هستید؟",
     "no categories found": "هیچ دسته بندی ای پیدا نشد",
     "edit category": "ویرایش دسته بندی",
-    "category updated successfully": "دسته بندی با موفقیت آپدیت شد",
+    "category updated successfully": "دسته بندی با موفقیت ویرایش شد",
     "category added successfully": "دسته بندی با موفقیت اضافه شد",
     "category deleted successfully" : "دسته بندی با موفقیت حذف شد",
     "category delete failed": "دسته بندی با موفقیت حذف نشد",
     "shop": "فروشگاه",
     "name en is required": "نام انگلیسی الزامی است",
     "name en has already been taken": "نام انگلیسی قبلا استفاده شده است",
-    "website must be a valid URL": "آدرس سایت معتبر نیست"
+    "website must be a valid URL": "آدرس سایت معتبر نیست",
+    "brands": "برند ها",
+    "create brand": "ایجاد برند",
+    "no brands found": "هیچ برندی پیدا نشد",
+    "name en": "نام انگلیسی",
+    "you are deleting the :brand brand": "شما در حال حذف برند :brand هستید",
+    "brand deleted successfully" : "برند با موفقیت حذف شد",
+    "brand delete failed": "برند با موفقیت حذف نشد",
+    "brand updated successfully": "برند با موفقیت ویرایش شد",
+    "brand added successfully": "برند با موفقیت اضافه شد"
 }

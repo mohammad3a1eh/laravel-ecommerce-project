@@ -137,5 +137,14 @@
     "shop": "Shop",
     "name en is required": "Name en is required",
     "name en has already been taken": "Name en has already been taken",
-    "website must be a valid URL": "Website must be a valid URL"
+    "website must be a valid URL": "Website must be a valid URL",
+    "brands": "Brands",
+    "create brand": "Create brand",
+    "no brands found": "No brands found",
+    "name en": "Name en",
+    "you are deleting the :brand brand": "You are deleting the :brand brand",
+    "brand deleted successfully" : "Brand deleted successfully",
+    "brand delete failed": "Brand delete failed",
+    "brand updated successfully": "Brand updated successfully",
+    "brand added successfully": "Brand added successfully"
 }
