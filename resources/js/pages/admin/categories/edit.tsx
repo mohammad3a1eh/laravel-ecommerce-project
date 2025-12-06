@@ -14,7 +14,7 @@ import { usePage, router } from '@inertiajs/react';
 import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
 import { route } from "ziggy-js";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Trash } from 'lucide-react';
 import { Command, CommandEmpty, CommandInput } from '@/components/ui/command';
 import type { BreadcrumbItem } from '@/types';
