@@ -18,7 +18,8 @@ import {
     Github,
     LayoutGrid,
     TrafficCone,
-    Tag
+    Tag,
+    Compass
 } from 'lucide-react';
 import AppLogo from './app-logo';
 import { useLaravelReactI18n } from "laravel-react-i18n";
@@ -50,6 +51,11 @@ export function AppSidebar() {
             title: t("categories"),
             href: route("admin.categories.index"),
             icon: Tag,
+        },
+        {
+            title: t("brands"),
+            href: route("admin.brands.index"),
+            icon: Compass,
         },
     ];
 

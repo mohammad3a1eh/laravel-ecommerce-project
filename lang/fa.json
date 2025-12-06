@@ -134,5 +134,8 @@
     "category added successfully": "دسته بندی با موفقیت اضافه شد",
     "category deleted successfully" : "دسته بندی با موفقیت حذف شد",
     "category delete failed": "دسته بندی با موفقیت حذف نشد",
-    "shop": "فروشگاه"
+    "shop": "فروشگاه",
+    "name en is required": "نام انگلیسی الزامی است",
+    "name en has already been taken": "نام انگلیسی قبلا استفاده شده است",
+    "website must be a valid URL": "آدرس سایت معتبر نیست"
 }

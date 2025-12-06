@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BrandController;
 
 Route::middleware(['auth', 'role:dev'])->group(function () {
     Route::get('/dashboard/maintenance', function () {
@@ -20,12 +21,17 @@ Route::middleware(['auth', 'role:dev'])->group(function () {
 
 
 Route::prefix('dashboard')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
-    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index'); // لیست دسته‌بندی‌ها
-    Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create'); // فرم ایجاد دسته‌بندی
-    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store'); // ذخیره دسته‌بندی جدید
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
     Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name("categories.destroy");
+
+    Route::get('/brands', [BrandController::class, 'index'])->name('brands.index');
+    Route::get('/brands/create', [BrandController::class, 'create'] )->name('brands.create');
+    Route::post('/brands', [BrandController::class, 'store'])->name('brands.store');
+    Route::get('/brands/{brand}/edit', [BrandController::class, 'edit'] )->name('brands.edit');
 });
 
 Route::get('/', function () {
