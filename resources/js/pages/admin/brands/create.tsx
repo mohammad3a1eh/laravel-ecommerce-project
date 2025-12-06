@@ -19,22 +19,26 @@ import { route } from 'ziggy-js';
 import type { BreadcrumbItem } from '@/types';
 import { useState } from 'react';
 
-const brandSchema = z.object({
-    name_fa: z.string().min(1, "این فیلد الزامی است"),
-    name_en: z.string().min(1, "این فیلد الزامی است"),
-    slug: z.string().optional(),
-    website: z.string().optional(),
-    image: z
-        .custom<FileList>()
-        .refine((files) => !files || files.length === 0 || files[0].type.startsWith("image/"), "فقط فایل تصویر مجاز است")
-        .optional(),
 
-});
-
-type BrandFormValues = z.infer<typeof brandSchema>;
 
 export default function CreateBrand() {
     const { t } = useLaravelReactI18n();
+
+    const brandSchema = z.object({
+        name_fa: z.string().min(1, t("this field is required")),
+        name_en: z.string().min(1, t("this field is required")),
+        slug: z.string()
+            .min(1, t("this field is required"))
+            .regex(/^[a-z0-9-]+$/, t("only lowercase english letters numbers and hyphens are not allowed")),
+        website: z.string().optional(),
+        image: z
+            .custom<FileList>()
+            .refine((files) => !files || files.length === 0 || files[0].type.startsWith("image/"), "فقط فایل تصویر مجاز است")
+            .optional(),
+
+    });
+
+    type BrandFormValues = z.infer<typeof brandSchema>;
 
     const { register, handleSubmit, control, setValue, formState: { errors } } = useForm<BrandFormValues>({
         resolver: zodResolver(brandSchema),
@@ -93,7 +97,7 @@ export default function CreateBrand() {
 
                             <div>
                                 <Label>{t("slug")}</Label>
-                                <Input {...register('slug')} placeholder="در صورت خالی بودن خودکار ساخته می‌شود" dir="ltr"/>
+                                <Input {...register('slug')} dir="ltr"/>
                                 <InputError message={errors.slug?.message} />
                             </div>
 

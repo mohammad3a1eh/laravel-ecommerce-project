@@ -1,4 +1,5 @@
-import { Head, useForm, usePage, router } from '@inertiajs/react';
+import { Head, usePage, router } from '@inertiajs/react';
+import { useForm } from 'react-hook-form';
 import AppLayout from '@/layouts/app-layout';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,7 +17,7 @@ import { route } from "ziggy-js";
 
 export default function EditBrand() {
     const { t } = useLaravelReactI18n();
-    const { brand } = usePage().props as { brand: any };
+    const { brand } = usePage().props as unknown as { brand: any };
 
     const breadcrumbs: BreadcrumbItem[] = [
         { title: t("dashboard"), href: route("dashboard") },
@@ -69,7 +70,7 @@ export default function EditBrand() {
         formData.append("slug", data.slug);
         formData.append("website", data.website ?? "");
 
-        router.post(
+        router.put(
             route("admin.brands.update", brand.id),
             formData,
             {
@@ -146,7 +147,7 @@ export default function EditBrand() {
 
                         <div className="flex flex-col gap-4">
                             {previewImage && (
-                                <div className="relative w-40 h-40 mx-auto">
+                                <div className="relative w-40 h-40 mx-auto my-auto">
                                     <img src={previewImage} className="w-full h-full object-cover rounded" />
                                     <Button
                                         type="button"
