@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBrandRequest;
+use App\Http\Requests\UpdateBrandRequest;
+use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
@@ -40,26 +42,41 @@ class BrandController extends Controller
 
     public function edit(Brand $brand)
     {
-        return inertia('admin/brands/edit', compact('brand'));
+        return inertia("admin/brands/edit", [
+            "brand" => [
+                "id" => $brand->id,
+                "name_fa" => $brand->name_fa,
+                "name_en" => $brand->name_en,
+                "slug" => $brand->slug,
+                "website" => $brand->website,
+                "image_url" => $brand->image ? asset("storage/" . $brand->image) : null,
+            ],
+        ]);
     }
 
-    public function update(StoreBrandRequest $request, Brand $brand)
+    public function update(UpdateBrandRequest $request, Brand $brand)
     {
         $brand->name_fa = $request->name_fa;
         $brand->name_en = $request->name_en;
         $brand->slug = $request->slug ?? \Str::slug($request->name_en);
         $brand->website = $request->website;
-        $brand->is_active = $request->is_active;
 
         if ($request->hasFile('image')) {
             if ($brand->image) {
-                \Storage::disk('public')->delete($brand->image);
+                Storage::disk('public')->delete($brand->image);
             }
             $brand->image = $request->file('image')->store('brands/images', 'public');
         }
 
         $brand->save();
+    }
 
-        return redirect()->route('admin.brands.index')->with('success', 'برند با موفقیت ویرایش شد');
+    public function destroy(Brand $brand)
+    {
+        if ($brand->image) {
+            Storage::disk('public')->delete($brand->image);
+        }
+
+        $brand->delete();
     }
 }
