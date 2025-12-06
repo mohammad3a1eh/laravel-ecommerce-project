@@ -46,7 +46,7 @@ import { toast } from 'sonner';
 import { router } from '@inertiajs/react';
 import { useLaravelReactI18n } from 'laravel-react-i18n';
 import { route } from 'ziggy-js';
-import { SquarePen, Trash } from 'lucide-react';
+import { ExternalLink, SquarePen, Trash } from 'lucide-react';
 
 interface Brand {
     id: number;
@@ -98,8 +98,8 @@ export default function Brands() {
                 setColumnVisibility({
                     id: true,
                     name_fa: true,
-                    name_en: true,
-                    slug: true,
+                    name_en: false,
+                    slug: false,
                     website: true,
                     image: true,
                     actions: true,
@@ -119,8 +119,8 @@ export default function Brands() {
         { accessorKey: 'slug', header: t("slug") },
         { accessorKey: 'website', header: t("website"), cell: ({ row }) =>
                 row.original.website ? (
-                    <a href={row.original.website} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
-                        {row.original.website}
+                    <a href={row.original.website} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline w-fit text-center items-center justify-center mx-auto">
+                        <ExternalLink className="mx-auto" />
                     </a>
                 ) : '-'
         },
@@ -279,7 +279,7 @@ export default function Brands() {
                         </Table>
                     </div>
 
-                    <div className="flex items-center justify-between mt-2">
+                    <div className="flex items-center justify-between">
                         <div className="space-x-2">
                             <Button size="sm" variant="outline" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>{t("previous")}</Button>
                             <Button size="sm" variant="outline" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>{t("next")}</Button>
