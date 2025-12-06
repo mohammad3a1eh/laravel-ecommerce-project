@@ -16,6 +16,5 @@ class Brand extends Model
         'slug',
         'image',
         'website',
-        'is_active',
     ];
 }
